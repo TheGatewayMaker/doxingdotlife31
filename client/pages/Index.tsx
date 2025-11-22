@@ -3,22 +3,7 @@ import { Search, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-interface Post {
-  id: string;
-  title: string;
-  description: string;
-  country?: string;
-  city?: string;
-  server?: string;
-  thumbnail?: string;
-  createdAt: string;
-}
-
-interface PostsResponse {
-  posts: Post[];
-  total: number;
-}
+import { Post, PostsResponse } from "@shared/api";
 
 const COUNTRIES = [
   "Afghanistan",
