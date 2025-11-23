@@ -173,8 +173,8 @@ export default function PostDetail() {
               </p>
 
               {/* Description */}
-              <div className="prose prose-invert max-w-none mb-12">
-                <div className="text-lg leading-relaxed text-foreground whitespace-pre-wrap">
+              <div className="prose prose-invert max-w-none mb-10 sm:mb-12">
+                <div className="text-base sm:text-lg leading-relaxed text-foreground whitespace-pre-wrap">
                   {post.description}
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function PostDetail() {
               )}
 
               {/* Share Button */}
-              <div className="border-t border-border pt-8 mt-12">
+              <div className="border-t border-border pt-6 sm:pt-8 mt-10 sm:mt-12">
                 <button
                   onClick={() => {
                     if (navigator.share) {
