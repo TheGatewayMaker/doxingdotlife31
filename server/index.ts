@@ -43,16 +43,14 @@ export function createServer() {
 
   // Health check endpoint
   app.get("/api/health", (_req, res) => {
-    const hasAdminUsername = !!process.env.ADMIN_USERNAME;
-    const hasAdminPassword = !!process.env.ADMIN_PASSWORD;
+    const hasFirebaseConfig = !!process.env.FIREBASE_PROJECT_ID;
+    const hasAuthorizedEmails = !!process.env.VITE_AUTHORIZED_EMAILS;
 
     res.json({
       status: "ok",
       environment: process.env.NODE_ENV || "development",
-      credentials: {
-        adminUsernameSet: hasAdminUsername,
-        adminPasswordSet: hasAdminPassword,
-      },
+      firebaseConfigured: hasFirebaseConfig,
+      authorizedEmailsConfigured: hasAuthorizedEmails,
       timestamp: new Date().toISOString(),
     });
   });
