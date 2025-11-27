@@ -331,13 +331,15 @@ export default function UppostPanel() {
               <label className="block text-sm font-bold mb-3 text-foreground">
                 Post Title <span className="text-destructive">*</span>
               </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border hover:border-accent/50 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
-                placeholder="Enter post title"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full px-4 py-3 bg-background/50 border-2 border-border/60 hover:border-accent/60 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-200"
+                  placeholder="Enter post title"
+                />
+              </div>
             </div>
 
             {/* Description */}
@@ -345,13 +347,15 @@ export default function UppostPanel() {
               <label className="block text-sm font-bold mb-3 text-foreground">
                 Description <span className="text-destructive">*</span>
               </label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border hover:border-accent/50 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent resize-none transition-all"
-                rows={5}
-                placeholder="Enter post description"
-              />
+              <div className="relative">
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-4 py-3 bg-background/50 border-2 border-border/60 hover:border-accent/60 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent resize-none transition-all duration-200"
+                  rows={5}
+                  placeholder="Enter post description"
+                />
+              </div>
             </div>
 
             {/* Thumbnail Upload */}
