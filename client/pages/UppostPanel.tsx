@@ -430,50 +430,53 @@ export default function UppostPanel() {
             </div>
 
             {/* Location Info */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Country */}
-              <div>
-                <label className="block text-sm font-bold mb-3 text-foreground flex items-center gap-2">
-                  <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-                  Country
-                </label>
-                <input
-                  type="text"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border hover:border-accent/50 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all"
-                  placeholder="(optional)"
-                />
-              </div>
+            <div className="bg-gradient-to-br from-background/40 to-background/20 border border-border/40 rounded-2xl p-6 md:p-8">
+              <h3 className="text-sm font-bold text-foreground mb-6 uppercase tracking-wider opacity-75">Location Information (Optional)</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Country */}
+                <div>
+                  <label className="block text-sm font-bold mb-3 text-foreground flex items-center gap-2">
+                    <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="w-full px-4 py-3 bg-background/50 border-2 border-border/60 hover:border-accent/60 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-200"
+                    placeholder="(optional)"
+                  />
+                </div>
 
-              {/* City */}
-              <div>
-                <label className="block text-sm font-bold mb-3 text-foreground flex items-center gap-2">
-                  <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  City
-                </label>
-                <input
-                  type="text"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border hover:border-accent/50 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all"
-                  placeholder="(optional)"
-                />
-              </div>
+                {/* City */}
+                <div>
+                  <label className="block text-sm font-bold mb-3 text-foreground flex items-center gap-2">
+                    <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="w-full px-4 py-3 bg-background/50 border-2 border-border/60 hover:border-accent/60 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-200"
+                    placeholder="(optional)"
+                  />
+                </div>
 
-              {/* Server */}
-              <div>
-                <label className="block text-sm font-bold mb-3 text-foreground flex items-center gap-2">
-                  <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8"/><rect x="2" y="14" width="20" height="8"/><line x1="6" y1="6" x2="6" y2="6.01"/><line x1="6" y1="18" x2="6" y2="18.01"/></svg>
-                  Server Name
-                </label>
-                <input
-                  type="text"
-                  value={server}
-                  onChange={(e) => setServer(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border hover:border-accent/50 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all"
-                  placeholder="(optional)"
-                />
+                {/* Server */}
+                <div>
+                  <label className="block text-sm font-bold mb-3 text-foreground flex items-center gap-2">
+                    <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8"/><rect x="2" y="14" width="20" height="8"/><line x1="6" y1="6" x2="6" y2="6.01"/><line x1="6" y1="18" x2="6" y2="18.01"/></svg>
+                    Server Name
+                  </label>
+                  <input
+                    type="text"
+                    value={server}
+                    onChange={(e) => setServer(e.target.value)}
+                    className="w-full px-4 py-3 bg-background/50 border-2 border-border/60 hover:border-accent/60 rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-200"
+                    placeholder="(optional)"
+                  />
+                </div>
               </div>
             </div>
 
