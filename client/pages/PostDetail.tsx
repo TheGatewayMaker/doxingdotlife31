@@ -234,15 +234,7 @@ export default function PostDetail() {
               {/* Share Button */}
               <div className="border-t border-border pt-6 sm:pt-8 mt-10 sm:mt-12">
                 <button
-                  onClick={() => {
-                    if (navigator.share) {
-                      navigator.share({
-                        title: post.title,
-                        text: post.description.substring(0, 100),
-                        url: window.location.href,
-                      });
-                    }
-                  }}
+                  onClick={handleShare}
                   className="flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-bold rounded-lg hover:bg-accent/90 transition-all shadow-md hover:shadow-lg active:scale-95"
                 >
                   <Share2 className="w-5 h-5" />
