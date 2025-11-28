@@ -340,11 +340,11 @@ export default function Index() {
   const [hasSearchFilters, setHasSearchFilters] = useState(false);
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
 
-  const availableCities = selectedCountry
-    ? (CITIES_BY_COUNTRY[selectedCountry] || []).filter((city) =>
-        city.toLowerCase().includes(citySearch.toLowerCase()),
-      )
-    : [];
+  const allCities = Object.values(CITIES_BY_COUNTRY).flat();
+  const uniqueCities = Array.from(new Set(allCities)).sort();
+  const availableCities = uniqueCities.filter((city) =>
+    city.toLowerCase().includes(citySearch.toLowerCase()),
+  );
 
   const filteredCountries = COUNTRIES.filter((country) =>
     country.toLowerCase().includes(countrySearch.toLowerCase()),
