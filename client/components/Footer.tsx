@@ -14,12 +14,12 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-t from-slate-950 to-slate-900 border-t border-blue-500/20 mt-16 shadow-lg animate-fadeIn">
+    <footer className="w-full bg-gradient-to-t from-gray-950 to-gray-900 border-t border-gray-700 mt-16 shadow-lg animate-fadeIn">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8">
           <div className="animate-fadeIn" style={{ animationDelay: "0.1s" }}>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-lg ring-2 ring-blue-500/40">
+              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-lg">
                 <img
                   src="https://i.ibb.co/rG8yDddq/doxingdotlifelogogeniune888175141.png"
                   alt="Doxing Dot Life Logo"
@@ -28,11 +28,11 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="font-black text-white text-lg">Doxing Dot Life</h3>
-                <p className="text-xs text-gray-400">Professional Database</p>
+                <p className="text-xs text-gray-500">Doxing Database</p>
               </div>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              A comprehensive and professional database platform for information sharing and research purposes.
+            <p className="text-sm text-gray-500 leading-relaxed">
+              The largest database of exposed and doxed individuals. Find and share information about anyone.
             </p>
           </div>
           <div className="animate-fadeIn" style={{ animationDelay: "0.2s" }}>
