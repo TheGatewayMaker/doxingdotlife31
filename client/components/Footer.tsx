@@ -1,4 +1,16 @@
-import { HomeIcon, LinkIcon, SearchAltIcon, MessageIcon, FileTextIcon, ScaleIcon, AlertIcon, ShoppingCartIcon, CreditCardIcon, PhoneIcon, MailIcon } from "@/components/Icons";
+import {
+  HomeIcon,
+  LinkIcon,
+  SearchAltIcon,
+  MessageIcon,
+  FileTextIcon,
+  ScaleIcon,
+  AlertIcon,
+  ShoppingCartIcon,
+  CreditCardIcon,
+  PhoneIcon,
+  MailIcon,
+} from "@/components/Icons";
 
 export default function Footer() {
   return (
@@ -27,19 +39,28 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <HomeIcon className="w-4 h-4" />
                   Home
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <SearchAltIcon className="w-4 h-4" />
                   Browse Database
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <MessageIcon className="w-4 h-4" />
                   Discord Community
                 </a>
@@ -53,19 +74,28 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <FileTextIcon className="w-4 h-4" />
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <ScaleIcon className="w-4 h-4" />
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <AlertIcon className="w-4 h-4" />
                   Disclaimer
                 </a>
@@ -79,19 +109,28 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <CreditCardIcon className="w-4 h-4" />
                   Premium Access
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <PhoneIcon className="w-4 h-4" />
                   Contact Support
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2">
+                <a
+                  href="#"
+                  className="hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
                   <MailIcon className="w-4 h-4" />
                   Report Issues
                 </a>

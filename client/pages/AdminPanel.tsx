@@ -333,7 +333,9 @@ export default function AdminPanel() {
                   <h3 className="text-xs font-black text-foreground uppercase tracking-widest">
                     Advanced Filtering
                   </h3>
-                  <p className="text-xs text-muted-foreground mt-1">Filter posts by category and region</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Filter posts by category and region
+                  </p>
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -417,8 +419,18 @@ export default function AdminPanel() {
                 <div className="text-center py-16">
                   <div className="mb-6 flex justify-center">
                     <div className="p-4 bg-muted rounded-2xl">
-                      <svg className="w-16 h-16 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+                      <svg
+                        className="w-16 h-16 text-muted-foreground"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                          d="M20 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -440,14 +452,18 @@ export default function AdminPanel() {
                       Manage Posts
                     </h2>
                     <p className="text-sm text-muted-foreground mt-1">
-                      <span className="font-semibold text-foreground">{filteredPosts.length}</span> post{filteredPosts.length !== 1 ? 's' : ''} found
-                      {searchQuery || selectedCountry ? ' (filtered)' : ''}
+                      <span className="font-semibold text-foreground">
+                        {filteredPosts.length}
+                      </span>{" "}
+                      post{filteredPosts.length !== 1 ? "s" : ""} found
+                      {searchQuery || selectedCountry ? " (filtered)" : ""}
                     </p>
                   </div>
                   <div className="flex items-center gap-3 bg-blue-600/10 px-4 py-3 rounded-lg border border-blue-600/20">
                     <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
                     <span className="text-sm font-medium text-foreground">
-                      Displaying {displayedPosts.length} of {filteredPosts.length}
+                      Displaying {displayedPosts.length} of{" "}
+                      {filteredPosts.length}
                     </span>
                   </div>
                 </div>
@@ -478,14 +494,25 @@ export default function AdminPanel() {
                     disabled={currentPage === 1}
                     className="px-4 sm:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md active:scale-95 text-sm sm:text-base flex items-center gap-2"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 19l-7-7 7-7"
+                      />
                     </svg>
                     Previous
                   </button>
                   <div className="flex items-center gap-1.5 flex-wrap justify-center">
                     {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
-                      const pageNum = currentPage > 3 ? currentPage + i - 3 : i + 1;
+                      const pageNum =
+                        currentPage > 3 ? currentPage + i - 3 : i + 1;
                       if (pageNum > totalPages) return null;
                       return (
                         <button
@@ -511,8 +538,18 @@ export default function AdminPanel() {
                     className="px-4 sm:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md active:scale-95 text-sm sm:text-base flex items-center gap-2"
                   >
                     Next
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -552,11 +589,14 @@ export default function AdminPanel() {
                 <h3 className="text-lg sm:text-xl font-bold text-foreground">
                   Delete Post
                 </h3>
-                <p className="text-xs text-muted-foreground mt-0.5">This action cannot be undone</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  This action cannot be undone
+                </p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
-              You are about to permanently delete this post. All associated media files and data will be removed. Please confirm this action.
+              You are about to permanently delete this post. All associated
+              media files and data will be removed. Please confirm this action.
             </p>
             <div className="flex gap-3">
               <button

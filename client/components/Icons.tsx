@@ -265,7 +265,9 @@ export const XIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-export const SettingsIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
+export const SettingsIcon: React.FC<IconProps> = ({
+  className = "w-5 h-5",
+}) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
@@ -295,7 +297,9 @@ export const LinkIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-export const SearchAltIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
+export const SearchAltIcon: React.FC<IconProps> = ({
+  className = "w-5 h-5",
+}) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
@@ -324,7 +328,9 @@ export const MessageIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-export const FileTextIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
+export const FileTextIcon: React.FC<IconProps> = ({
+  className = "w-5 h-5",
+}) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
@@ -372,7 +378,9 @@ export const AlertIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-export const ShoppingCartIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
+export const ShoppingCartIcon: React.FC<IconProps> = ({
+  className = "w-5 h-5",
+}) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
@@ -388,7 +396,9 @@ export const ShoppingCartIcon: React.FC<IconProps> = ({ className = "w-5 h-5" })
   </svg>
 );
 
-export const CreditCardIcon: React.FC<IconProps> = ({ className = "w-5 h-5" }) => (
+export const CreditCardIcon: React.FC<IconProps> = ({
+  className = "w-5 h-5",
+}) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
