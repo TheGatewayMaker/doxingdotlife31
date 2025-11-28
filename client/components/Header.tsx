@@ -116,7 +116,7 @@ export default function Header() {
             />
 
             {/* Sidebar */}
-            <div className="fixed left-0 top-16 bottom-0 w-64 sm:w-72 bg-gradient-to-b from-[#1a1a1a] to-[#000000] border-r border-[#666666] lg:hidden z-40 animate-slideInLeft shadow-2xl flex flex-col">
+            <div className="fixed left-0 top-16 bottom-0 w-64 sm:w-72 bg-[#000000] border-r border-[#666666] lg:hidden z-40 animate-slideInLeft shadow-2xl flex flex-col">
               <nav className="p-4 space-y-2 overflow-y-auto flex-1">
                 <Link
                   to="/"
