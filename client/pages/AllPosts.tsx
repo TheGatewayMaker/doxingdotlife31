@@ -463,7 +463,7 @@ export default function AllPosts() {
                 <h2 className="text-5xl md:text-6xl font-black mb-3 text-white">
                   No Posts Found
                 </h2>
-                <p className="text-gray-400">
+                <p className="text-[#979797]">
                   {hasSearchFilters
                     ? "Try adjusting your search filters"
                     : "No posts available at the moment"}
