@@ -53,26 +53,28 @@ export default function Header() {
           </Link>
           <Link
             to="/dox-anyone"
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all relative overflow-hidden group border-2 border-transparent"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all relative group"
             style={{
               background: "linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)",
-              backgroundClip: "padding-box",
             }}
           >
             <div
-              className="absolute inset-0 rounded-lg p-[2px] pointer-events-none"
+              className="absolute inset-0 rounded-lg pointer-events-none"
               style={{
-                background: "conic-gradient(from 0deg at 50% 50%, #3b82f6 0deg, #60a5fa 90deg, #3b82f6 180deg, #1e40af 270deg, #3b82f6 360deg)",
-                animation: "borderSnake 3s linear infinite reverse",
+                background: "conic-gradient(from 0deg, #60a5fa 0%, #3b82f6 25%, transparent 50%, #3b82f6 75%, #60a5fa 100%)",
+                padding: "2px",
+                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                 mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                WebkitMaskComposite: "xor",
                 maskComposite: "exclude",
+                animation: "snakeBorder 3s linear infinite reverse",
               }}
             />
             <SearchAltIcon className="w-4 h-4" />
             Dox Anyone
           </Link>
           <style>{`
-            @keyframes borderSnake {
+            @keyframes snakeBorder {
               0% { transform: rotate(0deg); }
               100% { transform: rotate(360deg); }
             }
