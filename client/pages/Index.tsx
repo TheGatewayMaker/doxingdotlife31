@@ -301,13 +301,13 @@ export default function Index() {
 
       <main className="flex-1 w-full">
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-900 pt-8 pb-8 md:pt-16 md:pb-12 border-b border-slate-700">
+        <div className="bg-background pt-8 pb-8 md:pt-16 md:pb-12 border-b border-border">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="animate-fadeIn" style={{ animationDelay: "0.1s" }}>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 text-white tracking-tighter leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 text-foreground tracking-tighter leading-tight">
                 Doxing Dot Life
               </h1>
-              <p className="text-base sm:text-lg md:text-xl font-semibold text-gray-400 mb-6 max-w-2xl">
+              <p className="text-base sm:text-lg md:text-xl font-semibold text-muted-foreground mb-6 max-w-2xl">
                 Find if you or someone you know have been Doxed
               </p>
             </div>
@@ -322,9 +322,9 @@ export default function Index() {
                 placeholder="Search Doxed Individuals"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-slate-800 border-2 border-slate-700 hover:border-blue-500 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base transition-all shadow-md hover:shadow-lg hover:shadow-blue-500/30"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-card border border-border hover:border-muted rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-muted/50 focus:border-muted text-sm sm:text-base transition-all"
               />
-              <Search className="absolute right-4 sm:right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <Search className="absolute right-4 sm:right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
             </div>
 
             {/* Categories Section */}
@@ -335,8 +335,8 @@ export default function Index() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {/* Country Dropdown */}
                 <div className="relative group">
-                  <label className="text-sm font-bold text-white block mb-3 flex items-center gap-2">
-                    <GlobeIcon className="w-4 h-4 text-blue-400" />
+                  <label className="text-sm font-bold text-foreground block mb-3 flex items-center gap-2">
+                    <GlobeIcon className="w-4 h-4 text-muted-foreground" />
                     By Country
                   </label>
                   <div className="relative">
@@ -347,7 +347,7 @@ export default function Index() {
                       }
                       value={countrySearch}
                       onChange={(e) => setCountrySearch(e.target.value)}
-                      className="w-full px-4 py-3 pr-10 bg-slate-800 border border-slate-700 hover:border-blue-500 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-all shadow-sm hover:shadow-md hover:shadow-blue-500/20"
+                      className="w-full px-4 py-3 pr-10 bg-card border border-border hover:border-muted rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-muted/50 focus:border-muted text-sm transition-all"
                     />
                     {selectedCountry && (
                       <button
@@ -355,7 +355,7 @@ export default function Index() {
                           setSelectedCountry("");
                           setCountrySearch("");
                         }}
-                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-accent hover:text-accent/80 transition-colors hover:scale-110"
+                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                         title="Clear selection"
                       >
                         <CloseIcon className="w-5 h-5" />
@@ -363,7 +363,7 @@ export default function Index() {
                     )}
                   </div>
                   {countrySearch && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-slate-700 rounded-lg z-[999] max-h-48 overflow-y-auto shadow-lg">
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg z-[999] max-h-48 overflow-y-auto shadow-lg">
                       {filteredCountries.length > 0 ? (
                         filteredCountries.map((country) => (
                           <button
@@ -372,13 +372,13 @@ export default function Index() {
                               setSelectedCountry(country);
                               setCountrySearch("");
                             }}
-                            className="w-full text-left px-4 py-2 hover:bg-blue-600/30 hover:border-l-2 hover:border-l-blue-500 text-white text-sm transition-all duration-200"
+                            className="w-full text-left px-4 py-2 hover:bg-muted text-foreground text-sm transition-all duration-200"
                           >
                             {country}
                           </button>
                         ))
                       ) : (
-                        <div className="px-4 py-2 text-gray-500 text-sm">
+                        <div className="px-4 py-2 text-muted-foreground text-sm">
                           No countries found
                         </div>
                       )}
@@ -388,8 +388,8 @@ export default function Index() {
 
                 {/* Server Dropdown */}
                 <div className="relative group">
-                  <label className="text-sm font-bold text-white block mb-3 flex items-center gap-2">
-                    <ServerIcon className="w-4 h-4 text-blue-400" />
+                  <label className="text-sm font-bold text-foreground block mb-3 flex items-center gap-2">
+                    <ServerIcon className="w-4 h-4 text-muted-foreground" />
                     By Server
                   </label>
                   <div className="relative">
@@ -400,7 +400,7 @@ export default function Index() {
                       }
                       value={serverSearch}
                       onChange={(e) => setServerSearch(e.target.value)}
-                      className="w-full px-4 py-3 pr-10 bg-slate-800 border border-slate-700 hover:border-blue-500 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-all shadow-sm hover:shadow-md hover:shadow-blue-500/20"
+                      className="w-full px-4 py-3 pr-10 bg-card border border-border hover:border-muted rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-muted/50 focus:border-muted text-sm transition-all"
                     />
                     {selectedServer && (
                       <button
@@ -408,7 +408,7 @@ export default function Index() {
                           setSelectedServer("");
                           setServerSearch("");
                         }}
-                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-accent hover:text-accent/80 transition-colors hover:scale-110"
+                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                         title="Clear selection"
                       >
                         <CloseIcon className="w-5 h-5" />
@@ -416,7 +416,7 @@ export default function Index() {
                     )}
                   </div>
                   {serverSearch && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-slate-700 rounded-lg z-[999] max-h-48 overflow-y-auto shadow-lg">
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg z-[999] max-h-48 overflow-y-auto shadow-lg">
                       {filteredServers.length > 0 ? (
                         filteredServers.map((server) => (
                           <button
@@ -425,7 +425,7 @@ export default function Index() {
                               setSelectedServer(server);
                               setServerSearch("");
                             }}
-                            className="w-full text-left px-4 py-2 hover:bg-blue-600/30 hover:border-l-2 hover:border-l-blue-500 text-white text-sm transition-all duration-200"
+                            className="w-full text-left px-4 py-2 hover:bg-muted text-foreground text-sm transition-all duration-200"
                           >
                             {server}
                           </button>

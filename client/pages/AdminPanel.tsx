@@ -280,23 +280,20 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-background/80 text-foreground flex flex-col animate-fadeIn">
+    <div className="min-h-screen bg-background text-foreground flex flex-col animate-fadeIn">
       <Header />
 
       <main className="flex-1 w-full">
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-blue-600/10 via-background to-background py-4 md:py-6 border-b border-border/40">
+        <div className="bg-background py-4 md:py-6 border-b border-border/40">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="animate-fadeIn" style={{ animationDelay: "0.1s" }}>
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-2 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg shadow-xl">
-                  <EditIcon className="w-5 h-5 text-white" />
-                </div>
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight leading-tight">
                     Admin Panel
                   </h1>
-                  <p className="text-xs sm:text-sm font-semibold text-muted-foreground mt-1">
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                     Manage your posts
                   </p>
                 </div>
@@ -314,7 +311,7 @@ export default function AdminPanel() {
                   placeholder="Search posts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-3 sm:px-4 py-2.5 bg-card border-2 border-border hover:border-accent/40 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-sm transition-all shadow-md hover:shadow-lg hover:shadow-blue-600/10 pl-9"
+                  className="w-full px-3 sm:px-4 py-2.5 bg-card border border-border hover:border-muted rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-muted/50 focus:border-muted text-sm transition-all pl-9"
                 />
                 <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
@@ -322,13 +319,10 @@ export default function AdminPanel() {
 
             {/* Filter Section */}
             <div
-              className="bg-gradient-to-br from-card via-card/50 to-card/30 border border-border/60 rounded-lg p-4 mt-3 animate-fadeIn shadow-lg shadow-black/5"
+              className="bg-card border border-border rounded-lg p-4 mt-3 animate-fadeIn"
               style={{ animationDelay: "0.3s" }}
             >
               <div className="flex items-center gap-2 mb-4">
-                <div className="p-1.5 bg-blue-600/20 rounded-md">
-                  <FilterIcon className="w-4 h-4 text-blue-500" />
-                </div>
                 <div>
                   <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">
                     Filter
@@ -338,8 +332,8 @@ export default function AdminPanel() {
               <div className="grid grid-cols-1 gap-3">
                 {/* Country Dropdown */}
                 <div className="relative group">
-                  <label className="text-xs font-bold text-foreground block mb-2 flex items-center gap-1.5 group-hover:text-accent transition-colors">
-                    <GlobeIcon className="w-3 h-3 text-blue-500" />
+                  <label className="text-xs font-bold text-foreground block mb-2 flex items-center gap-1.5">
+                    <GlobeIcon className="w-3 h-3 text-muted-foreground" />
                     Country
                   </label>
                   <input
@@ -349,10 +343,10 @@ export default function AdminPanel() {
                     }
                     value={countrySearch}
                     onChange={(e) => setCountrySearch(e.target.value)}
-                    className="w-full px-3 py-2 bg-background/60 border-2 border-border/60 hover:border-blue-500/40 rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-xs transition-all shadow-sm hover:shadow-lg hover:shadow-blue-500/10"
+                    className="w-full px-3 py-2 bg-background/60 border border-border hover:border-muted rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-muted/50 focus:border-muted text-xs transition-all"
                   />
                   {countrySearch && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg z-50 max-h-40 overflow-y-auto shadow-lg shadow-black/10">
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg z-50 max-h-40 overflow-y-auto shadow-lg">
                       {filteredCountries.length > 0 ? (
                         filteredCountries.map((country) => (
                           <button
@@ -361,7 +355,7 @@ export default function AdminPanel() {
                               setSelectedCountry(country);
                               setCountrySearch("");
                             }}
-                            className="w-full text-left px-3 py-2 hover:bg-blue-600/20 hover:border-l-2 hover:border-l-blue-500 text-foreground text-xs transition-all duration-200 flex items-center gap-2"
+                            className="w-full text-left px-3 py-2 hover:bg-muted text-foreground text-xs transition-all duration-200 flex items-center gap-2"
                           >
                             <GlobeIcon className="w-3 h-3 text-muted-foreground" />
                             {country}
