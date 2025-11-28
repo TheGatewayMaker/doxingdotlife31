@@ -219,13 +219,13 @@ export default function UppostPanel() {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col animate-fadeIn">
         <Header />
-        <div className="flex-1 flex items-center justify-center px-4 py-12 bg-gradient-to-br from-background via-muted/20 to-background">
+        <div className="flex-1 flex items-center justify-center px-4 py-12 bg-background">
           <div
             className="w-full max-w-md animate-fadeIn"
             style={{ animationDelay: "0.1s" }}
           >
             <div className="bg-card border border-border rounded-xl p-10 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-              <div className="mb-4 w-12 h-12 bg-gradient-to-br from-accent to-accent/80 rounded-lg flex items-center justify-center shadow-lg">
+              <div className="mb-4 w-12 h-12 bg-accent rounded-lg flex items-center justify-center shadow-lg">
                 <UploadIcon className="w-6 h-6 text-accent-foreground" />
               </div>
               <h1 className="text-4xl font-black mb-2 text-foreground">
@@ -300,7 +300,7 @@ export default function UppostPanel() {
       <Header />
       <main className="flex-1 w-full">
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-background via-card/50 to-background pt-8 pb-8 md:pt-16 md:pb-12 border-b border-border/50">
+        <div className="bg-background pt-8 pb-8 md:pt-16 md:pb-12 border-b border-border/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-0">
               <div
@@ -342,7 +342,7 @@ export default function UppostPanel() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <form
             onSubmit={handleUpload}
-            className="bg-gradient-to-br from-card via-card to-card/90 border border-border/50 rounded-2xl p-6 sm:p-8 md:p-12 space-y-8 shadow-2xl hover:shadow-3xl transition-all duration-300 animate-fadeIn backdrop-blur-sm"
+            className="bg-card border border-border/50 rounded-2xl p-6 sm:p-8 md:p-12 space-y-8 shadow-2xl hover:shadow-3xl transition-all duration-300 animate-fadeIn backdrop-blur-sm"
             style={{ animationDelay: "0.2s" }}
           >
             {/* Title */}
