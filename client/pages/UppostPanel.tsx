@@ -37,6 +37,10 @@ export default function UppostPanel() {
   const [uploadMessage, setUploadMessage] = useState("");
   const [uploadError, setUploadError] = useState("");
 
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [deletingPostId, setDeletingPostId] = useState<string | null>(null);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
