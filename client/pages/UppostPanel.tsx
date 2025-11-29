@@ -63,6 +63,27 @@ export default function UppostPanel() {
       username: "",
     });
     resetForm();
+    setPosts([]);
+  };
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      loadPosts();
+    }
+  }, [auth.isAuthenticated]);
+
+  const loadPosts = async () => {
+    setLoadingPosts(true);
+    try {
+      const response = await fetch("/api/posts");
+      const data: PostsResponse = await response.json();
+      setPosts(Array.isArray(data.posts) ? data.posts : []);
+    } catch (error) {
+      console.error("Error loading posts:", error);
+      setPosts([]);
+    } finally {
+      setLoadingPosts(false);
+    }
   };
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
