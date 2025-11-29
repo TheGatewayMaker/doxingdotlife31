@@ -47,7 +47,7 @@ const detectImageMimeType = (
   return mimeTypes[extension] || "image/jpeg";
 };
 
-export const handleUpload: RequestHandler = async (req, res) => {
+export const handleUpload: RequestHandler = async (req, res, next) => {
   try {
     const { title, description, country, city, server, nsfw } =
       req.body as UploadRequest;
@@ -235,17 +235,16 @@ export const handleUpload: RequestHandler = async (req, res) => {
         details:
           process.env.NODE_ENV === "development" ? errorMessage : undefined,
       });
+      return;
     }
   } catch (error) {
     console.error("Upload error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : String(error);
     res.status(500).json({
       error: "Upload failed",
       details:
-        process.env.NODE_ENV === "development"
-          ? error instanceof Error
-            ? error.message
-            : String(error)
-          : undefined,
+        process.env.NODE_ENV === "development" ? errorMessage : undefined,
     });
   }
 };
