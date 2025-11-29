@@ -49,6 +49,16 @@ const detectImageMimeType = (
 
 export const handleUpload: RequestHandler = async (req, res, next) => {
   try {
+    // Ensure we have files from multer
+    if (!req.files || typeof req.files !== "object") {
+      console.error("Invalid files object from multer", {
+        filesType: typeof req.files,
+        filesKeys: req.files ? Object.keys(req.files) : [],
+      });
+      res.status(400).json({ error: "Files object is missing or invalid" });
+      return;
+    }
+
     const { title, description, country, city, server, nsfw } =
       req.body as UploadRequest;
     const files = req.files as
