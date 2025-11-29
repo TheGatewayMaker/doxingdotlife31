@@ -45,14 +45,24 @@ const getR2Client = (): S3Client => {
 
   const endpoint = `https://${accountId}.r2.cloudflarestorage.com`;
 
-  return new S3Client({
-    region: "auto",
-    endpoint: endpoint,
-    credentials: {
-      accessKeyId: accessKeyId,
-      secretAccessKey: secretAccessKey,
-    },
-  });
+  try {
+    const client = new S3Client({
+      region: "auto",
+      endpoint: endpoint,
+      credentials: {
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+      },
+    });
+
+    console.log(
+      `[${new Date().toISOString()}] R2 Client initialized successfully with endpoint: ${endpoint}`,
+    );
+    return client;
+  } catch (error) {
+    console.error("Failed to initialize R2 client:", error);
+    throw error;
+  }
 };
 
 const getBucketName = (): string => {
@@ -61,6 +71,80 @@ const getBucketName = (): string => {
     throw new Error("Missing required environment variable: R2_BUCKET_NAME");
   }
   return bucketName;
+};
+
+export const validateR2Configuration = async (): Promise<{
+  isValid: boolean;
+  message: string;
+  details: { [key: string]: any };
+}> => {
+  const details: { [key: string]: any } = {};
+
+  try {
+    // Check environment variables
+    const accessKeyId = process.env.R2_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+    const accountId = process.env.R2_ACCOUNT_ID;
+    const bucketName = process.env.R2_BUCKET_NAME;
+
+    details.hasAccessKeyId = !!accessKeyId;
+    details.hasSecretAccessKey = !!secretAccessKey;
+    details.hasAccountId = !!accountId;
+    details.hasBucketName = !!bucketName;
+
+    if (!accessKeyId || !secretAccessKey || !accountId || !bucketName) {
+      const missing = [];
+      if (!accessKeyId) missing.push("R2_ACCESS_KEY_ID");
+      if (!secretAccessKey) missing.push("R2_SECRET_ACCESS_KEY");
+      if (!accountId) missing.push("R2_ACCOUNT_ID");
+      if (!bucketName) missing.push("R2_BUCKET_NAME");
+
+      return {
+        isValid: false,
+        message: `Missing required R2 environment variables: ${missing.join(", ")}`,
+        details,
+      };
+    }
+
+    // Try to create client
+    const client = getR2Client();
+    details.clientCreated = true;
+
+    // Try to list objects (this validates credentials)
+    try {
+      await client.send(
+        new ListObjectsV2Command({
+          Bucket: bucketName,
+          MaxKeys: 1,
+        }),
+      );
+      details.bucketAccessible = true;
+    } catch (accessError) {
+      details.bucketAccessible = false;
+      details.accessError =
+        accessError instanceof Error
+          ? accessError.message
+          : String(accessError);
+      return {
+        isValid: false,
+        message: `Cannot access R2 bucket "${bucketName}". Check credentials and bucket name.`,
+        details,
+      };
+    }
+
+    return {
+      isValid: true,
+      message: "R2 configuration is valid",
+      details,
+    };
+  } catch (error) {
+    details.error = error instanceof Error ? error.message : String(error);
+    return {
+      isValid: false,
+      message: "Failed to validate R2 configuration",
+      details,
+    };
+  }
 };
 
 export const getMediaUrl = (key: string): string => {
@@ -94,24 +178,38 @@ export const uploadMediaFile = async (
   buffer: Buffer,
   contentType: string,
 ): Promise<string> => {
-  const client = getR2Client();
-  const bucketName = getBucketName();
-  const key = `posts/${postId}/${fileName}`;
+  try {
+    const client = getR2Client();
+    const bucketName = getBucketName();
+    const key = `posts/${postId}/${fileName}`;
 
-  await client.send(
-    new PutObjectCommand({
-      Bucket: bucketName,
-      Key: key,
-      Body: buffer,
-      ContentType: contentType,
-      CacheControl: "public, max-age=31536000",
-      Metadata: {
-        "Cache-Control": "public, max-age=31536000",
-      },
-    }),
-  );
+    console.log(
+      `[${new Date().toISOString()}] Uploading file to R2: ${key} (${(buffer.length / 1024 / 1024).toFixed(2)}MB)`,
+    );
 
-  return getMediaUrl(key);
+    await client.send(
+      new PutObjectCommand({
+        Bucket: bucketName,
+        Key: key,
+        Body: buffer,
+        ContentType: contentType,
+        CacheControl: "public, max-age=31536000",
+        Metadata: {
+          "Cache-Control": "public, max-age=31536000",
+        },
+      }),
+    );
+
+    console.log(`✅ File uploaded successfully: ${key}`);
+    return getMediaUrl(key);
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error(
+      `Failed to upload file ${fileName} for post ${postId}:`,
+      errorMsg,
+    );
+    throw new Error(`Failed to upload file to R2 storage: ${errorMsg}`);
+  }
 };
 
 export const uploadPostMetadata = async (
@@ -193,37 +291,50 @@ export const getPostMetadata = async (
 };
 
 export const listPostFiles = async (postId: string): Promise<string[]> => {
-  const client = getR2Client();
-  const bucketName = getBucketName();
-  const files: string[] = [];
+  try {
+    const client = getR2Client();
+    const bucketName = getBucketName();
+    const files: string[] = [];
 
-  let continuationToken: string | undefined;
+    let continuationToken: string | undefined;
 
-  do {
-    const response = await client.send(
-      new ListObjectsV2Command({
-        Bucket: bucketName,
-        Prefix: `posts/${postId}/`,
-        ContinuationToken: continuationToken,
-      }),
-    );
+    do {
+      try {
+        const response = await client.send(
+          new ListObjectsV2Command({
+            Bucket: bucketName,
+            Prefix: `posts/${postId}/`,
+            ContinuationToken: continuationToken,
+          }),
+        );
 
-    if (response.Contents) {
-      for (const obj of response.Contents) {
-        if (
-          obj.Key &&
-          obj.Key !== `posts/${postId}/metadata.json` &&
-          obj.Key !== `posts/${postId}/`
-        ) {
-          files.push(obj.Key.split("/").pop() || "");
+        if (response.Contents) {
+          for (const obj of response.Contents) {
+            if (
+              obj.Key &&
+              obj.Key !== `posts/${postId}/metadata.json` &&
+              obj.Key !== `posts/${postId}/`
+            ) {
+              files.push(obj.Key.split("/").pop() || "");
+            }
+          }
         }
+
+        continuationToken = response.NextContinuationToken;
+      } catch (pageError) {
+        const errorMsg =
+          pageError instanceof Error ? pageError.message : String(pageError);
+        console.error(`Error listing files for post ${postId}:`, errorMsg);
+        throw pageError;
       }
-    }
+    } while (continuationToken);
 
-    continuationToken = response.NextContinuationToken;
-  } while (continuationToken);
-
-  return files.filter((f) => f);
+    return files.filter((f) => f);
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error(`Failed to list files for post ${postId}:`, errorMsg);
+    throw new Error(`Failed to list post files from R2 storage: ${errorMsg}`);
+  }
 };
 
 export const updateServersList = async (servers: string[]): Promise<void> => {
@@ -274,23 +385,39 @@ export const uploadPostMetadataWithThumbnail = async (
   metadata: PostMetadata,
   thumbnailUrl: string,
 ): Promise<void> => {
-  const client = getR2Client();
-  const bucketName = getBucketName();
-  const key = `posts/${postId}/metadata.json`;
+  try {
+    const client = getR2Client();
+    const bucketName = getBucketName();
+    const key = `posts/${postId}/metadata.json`;
 
-  const metadataWithThumbnail: PostMetadataWithThumbnail = {
-    ...metadata,
-    thumbnail: thumbnailUrl,
-  };
+    const metadataWithThumbnail: PostMetadataWithThumbnail = {
+      ...metadata,
+      thumbnail: thumbnailUrl,
+    };
 
-  await client.send(
-    new PutObjectCommand({
-      Bucket: bucketName,
-      Key: key,
-      Body: JSON.stringify(metadataWithThumbnail, null, 2),
-      ContentType: "application/json",
-    }),
-  );
+    console.log(
+      `[${new Date().toISOString()}] Uploading metadata for post ${postId}`,
+    );
+
+    await client.send(
+      new PutObjectCommand({
+        Bucket: bucketName,
+        Key: key,
+        Body: JSON.stringify(metadataWithThumbnail, null, 2),
+        ContentType: "application/json",
+      }),
+    );
+
+    console.log(
+      `[${new Date().toISOString()}] ✅ Metadata uploaded successfully for post ${postId}`,
+    );
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error(`Failed to upload metadata for post ${postId}:`, errorMsg);
+    throw new Error(
+      `Failed to upload post metadata to R2 storage: ${errorMsg}`,
+    );
+  }
 };
 
 export interface PostWithThumbnail extends PostMetadata {
@@ -348,20 +475,74 @@ export const deleteMediaFile = async (
 };
 
 export const deletePostFolder = async (postId: string): Promise<void> => {
-  const client = getR2Client();
-  const bucketName = getBucketName();
+  try {
+    const client = getR2Client();
+    const bucketName = getBucketName();
 
-  const files = await listPostFiles(postId);
-  files.push("metadata.json");
-
-  for (const file of files) {
-    const key = `posts/${postId}/${file}`;
-    await client.send(
-      new DeleteObjectCommand({
-        Bucket: bucketName,
-        Key: key,
-      }),
+    console.log(
+      `[${new Date().toISOString()}] Starting deletion of post ${postId}`,
     );
+
+    const files = await listPostFiles(postId);
+    files.push("metadata.json");
+
+    if (files.length === 0) {
+      console.warn(`No files found for post ${postId}`);
+      return;
+    }
+
+    console.log(
+      `[${new Date().toISOString()}] Deleting ${files.length} files from post ${postId}`,
+    );
+
+    const deleteErrors: Array<{ file: string; error: string }> = [];
+
+    for (const file of files) {
+      try {
+        const key = `posts/${postId}/${file}`;
+        console.log(`Deleting ${key}`);
+
+        await client.send(
+          new DeleteObjectCommand({
+            Bucket: bucketName,
+            Key: key,
+          }),
+        );
+
+        console.log(`✅ Deleted ${key}`);
+      } catch (fileError) {
+        const errorMsg =
+          fileError instanceof Error ? fileError.message : String(fileError);
+        console.error(`Failed to delete file ${file}:`, errorMsg);
+        deleteErrors.push({
+          file,
+          error: errorMsg,
+        });
+      }
+    }
+
+    if (deleteErrors.length > 0) {
+      const errorSummary = deleteErrors
+        .map((e) => `${e.file}: ${e.error}`)
+        .join("; ");
+      console.error(
+        `Some files failed to delete for post ${postId}: ${errorSummary}`,
+      );
+      throw new Error(
+        `Failed to delete ${deleteErrors.length} file(s) from post. Details: ${errorSummary}`,
+      );
+    }
+
+    console.log(
+      `[${new Date().toISOString()}] ✅ Successfully deleted post ${postId}`,
+    );
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error(
+      `[${new Date().toISOString()}] Error deleting post ${postId}:`,
+      errorMsg,
+    );
+    throw error;
   }
 };
 

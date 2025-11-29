@@ -7,9 +7,25 @@ let serverlessHandler: any;
 const getApp = () => {
   if (!app) {
     try {
+      console.log(
+        `[${new Date().toISOString()}] Initializing Express server...`,
+      );
       app = createServer();
+      console.log(
+        `[${new Date().toISOString()}] ✅ Express server initialized successfully`,
+      );
     } catch (error) {
-      console.error("Failed to create server:", error);
+      console.error(
+        `[${new Date().toISOString()}] ❌ Failed to create server:`,
+        error,
+      );
+      console.error("Environment variables available:", {
+        hasFirebaseProjectId: !!process.env.FIREBASE_PROJECT_ID,
+        hasR2AccessKeyId: !!process.env.R2_ACCESS_KEY_ID,
+        hasR2SecretAccessKey: !!process.env.R2_SECRET_ACCESS_KEY,
+        hasR2AccountId: !!process.env.R2_ACCOUNT_ID,
+        hasR2BucketName: !!process.env.R2_BUCKET_NAME,
+      });
       throw error;
     }
   }
@@ -44,15 +60,27 @@ export const handler = async (event: any, context: any) => {
     // Set a longer timeout for the context
     context.callbackWaitsForEmptyEventLoop = false;
 
+    console.log(
+      `[${new Date().toISOString()}] Incoming ${event.httpMethod} ${event.path}`,
+    );
+
     const handler = getServerlessHandler();
     const result = await handler(event, context);
 
     return result;
   } catch (error) {
-    console.error("Handler error:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(
+      `[${new Date().toISOString()}] ❌ Handler error:`,
+      errorMessage,
+    );
     console.error("Error details:", {
-      message: error instanceof Error ? error.message : String(error),
+      message: errorMessage,
       stack: error instanceof Error ? error.stack : undefined,
+      event: {
+        httpMethod: event.httpMethod,
+        path: event.path,
+      },
     });
 
     return {
@@ -61,10 +89,8 @@ export const handler = async (event: any, context: any) => {
         error: "Internal server error",
         details:
           process.env.NODE_ENV === "development"
-            ? error instanceof Error
-              ? error.message
-              : String(error)
-            : undefined,
+            ? errorMessage
+            : "An unexpected error occurred on the server.",
       }),
       headers: {
         "Content-Type": "application/json",
