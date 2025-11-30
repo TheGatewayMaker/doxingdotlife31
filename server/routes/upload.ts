@@ -197,6 +197,10 @@ export const handleUpload: RequestHandler = async (req, res, next) => {
       const mediaFileNames: string[] = [];
       const uploadErrors: Array<{ index: number; error: string }> = [];
 
+      console.log(
+        `[${new Date().toISOString()}] Starting upload of ${mediaCount} media files for post ${postId}`,
+      );
+
       for (let i = 0; i < files.media.length; i++) {
         try {
           const mediaFile = files.media[i];
@@ -206,12 +210,13 @@ export const handleUpload: RequestHandler = async (req, res, next) => {
             throw new Error(`File ${i + 1} is missing or has no buffer data`);
           }
 
+          const fileSizeMB = (mediaFile.size / 1024 / 1024).toFixed(2);
           const originalName = mediaFile.originalname || `media-${i + 1}`;
           const sanitizedName = sanitizeFileName(originalName);
           const mediaFileName = `${Date.now()}-${i}-${sanitizedName}`;
 
           console.log(
-            `Uploading media file ${i + 1}/${mediaCount}: ${mediaFileName} (${(mediaFile.size / 1024 / 1024).toFixed(2)}MB)`,
+            `[${new Date().toISOString()}] Uploading media file ${i + 1}/${mediaCount}: ${mediaFileName} (${fileSizeMB}MB)`,
           );
 
           const mediaFileMimeType = mediaFile.mimetype
@@ -221,21 +226,23 @@ export const handleUpload: RequestHandler = async (req, res, next) => {
               )
             : "application/octet-stream";
 
+          const uploadStartTime = Date.now();
           await uploadMediaFile(
             postId,
             mediaFileName,
             mediaFile.buffer,
             mediaFileMimeType,
           );
+          const uploadDuration = Date.now() - uploadStartTime;
 
           mediaFileNames.push(mediaFileName);
           console.log(
-            `[${new Date().toISOString()}] ✅ File ${i + 1}/${mediaCount} uploaded successfully`,
+            `[${new Date().toISOString()}] ✅ File ${i + 1}/${mediaCount} uploaded successfully in ${uploadDuration}ms`,
           );
         } catch (fileError) {
           const errorMsg =
             fileError instanceof Error ? fileError.message : String(fileError);
-          console.error(`Error uploading file ${i + 1}:`, errorMsg);
+          console.error(`[${new Date().toISOString()}] Error uploading file ${i + 1}:`, errorMsg);
           uploadErrors.push({
             index: i + 1,
             error: errorMsg,
