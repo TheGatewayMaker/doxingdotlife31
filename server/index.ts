@@ -228,6 +228,13 @@ export function createServer() {
     };
   };
 
+  // Presigned URL generation route (for R2 direct uploads)
+  app.post(
+    "/api/generate-upload-urls",
+    authMiddleware,
+    asyncHandler(handleGenerateUploadUrls),
+  );
+
   app.post(
     "/api/upload",
     uploadTimeout,
